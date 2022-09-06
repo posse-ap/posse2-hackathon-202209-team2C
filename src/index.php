@@ -17,12 +17,7 @@ $today = date("Y/m/d");
 // 当日以降のイベントを取得する
 $from_now_events =
   $db->prepare(
-    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
-    FROM events
-    LEFT OUTER JOIN event_attendance 
-    ON events.id = event_attendance.event_id 
-    WHERE start_at > :today 
-    GROUP BY events.id'
+    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > :today GROUP BY events.id ORDER BY start_at ASC'
   );
 
 $from_now_events->bindValue(":today", $today, PDO::PARAM_STR);
