@@ -88,9 +88,6 @@ CREATE TABLE `users` (
 -- テーブルのデータのダンプ `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `created`) VALUES
-(1, 'email@email', 'pass', '2022-09-06 14:18:11');
-
 --
 -- ダンプしたテーブルのインデックス
 --
