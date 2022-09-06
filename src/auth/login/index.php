@@ -2,6 +2,17 @@
 session_start();
 require('../../dbconnect.php');
 
+//  ダミーデータ挿入 passwordハッシュ化
+$form = [
+  'email' => 'email@email',
+  'password' => 'pass'
+];
+$stmt = $db->prepare('insert into users (email, password) VALUES (?, ?)');
+$password = password_hash($form['password'], PASSWORD_DEFAULT);
+$stmt->bindValue(1, $form['email']);
+$stmt->bindValue(2, $password);
+$stmt->execute();
+
 $error = [];
 $email = '';
 $password = '';
@@ -16,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt->execute();
   $result = $stmt->fetch();
 
-  if (isset($result['password']) && $password === $result['password']) {
+  if (isset($result['password']) && password_verify($password, $result['password'])) {
     // ログイン成功
     session_regenerate_id();
     $_SESSION['id'] = $result['id'];
