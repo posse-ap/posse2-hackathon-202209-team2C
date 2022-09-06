@@ -4,7 +4,25 @@ require('dbconnect.php');
 $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
 $events = $stmt->fetchAll();
 
-function get_day_of_week ($w) {
+$today = date("Y/m/d");
+// 当日以降のイベントを取得する
+$from_now_events =
+  $db->prepare(
+    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+    FROM events
+    LEFT OUTER JOIN event_attendance 
+    ON events.id = event_attendance.event_id 
+    WHERE start_at > :today 
+    GROUP BY events.id'
+  );
+
+$from_now_events->bindValue(":today", $today, PDO::PARAM_STR);
+$from_now_events->execute();
+$from_now_events = $from_now_events->fetchAll();
+
+
+function get_day_of_week($w)
+{
   $day_of_week_list = ['日', '月', '火', '水', '木', '金', '土'];
   return $day_of_week_list["$w"];
 }
@@ -53,7 +71,7 @@ function get_day_of_week ($w) {
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
 
-        <?php foreach ($events as $event) : ?>
+        <?php foreach ($from_now_events as $event) : ?>
           <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
