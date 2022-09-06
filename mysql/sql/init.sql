@@ -74,10 +74,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `members`
+-- テーブルの構造 `users`
 --
 
-CREATE TABLE `members` (
+CREATE TABLE `users` (
   `id` int NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE `members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
--- テーブルのデータのダンプ `members`
+-- テーブルのデータのダンプ `users`
 --
 
-INSERT INTO `members` (`id`, `email`, `password`, `created`) VALUES
+INSERT INTO `users` (`id`, `email`, `password`, `created`) VALUES
 (1, 'email@email', 'pass', '2022-09-06 14:18:11');
 
 --
@@ -96,9 +96,9 @@ INSERT INTO `members` (`id`, `email`, `password`, `created`) VALUES
 --
 
 --
--- テーブルのインデックス `members`
+-- テーブルのインデックス `users`
 --
-ALTER TABLE `members`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -106,9 +106,9 @@ ALTER TABLE `members`
 --
 
 --
--- テーブルの AUTO_INCREMENT `members`
+-- テーブルの AUTO_INCREMENT `users`
 --
-ALTER TABLE `members`
+ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 

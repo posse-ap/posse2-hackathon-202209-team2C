@@ -2,7 +2,9 @@
 session_start();
 require('dbconnect.php');
 
-if (!isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) {
+	$user_id = $_SESSION['id']; //usersのid
+} else {
 	header('Location: auth/login/index.php');
 	exit();
 }

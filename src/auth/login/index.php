@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($email != '' && $password != '') {
   }
   // ログインチェック
-  $stmt = $db->prepare('select id, password from members where email=? limit 1');
+  $stmt = $db->prepare('select id, password from users where email=? limit 1');
   $stmt->bindValue(1, $email);
   $stmt->execute();
   $result = $stmt->fetch();
