@@ -37,12 +37,6 @@ SET
 
 INSERT INTO events
 SET
-    name = '縦モク',
-    start_at = '2022/09/11 00:00',
-    end_at = '2022/09/11 23:00';
-
-INSERT INTO events
-SET
     name = '横モク',
     start_at = '2021/08/02 21:00',
     end_at = '2021/08/02 23:00';
@@ -124,6 +118,18 @@ SET
     name = '遊び',
     start_at = '2021/09/06 18:00',
     end_at = '2021/09/06 22:00';
+
+INSERT INTO events
+SET
+    name = '縦モク',
+    start_at = '2022/09/11 00:00',
+    end_at = '2022/09/11 23:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく',
+    start_at = '2022/09/11 00:00',
+    end_at = '2022/09/11 23:00';
 
 INSERT INTO event_attendance SET event_id=1;
 
