@@ -1,3 +1,33 @@
+<?php
+session_start();
+require('../../dbconnect.php');
+
+$error = [];
+$email = '';
+$password = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+  if ($email != '' && $password != '') {
+  }
+  // ログインチェック
+  $stmt = $db->prepare('select id, password from users where email=? limit 1');
+  $stmt->bindValue(1, $email);
+  $stmt->execute();
+  $result = $stmt->fetch();
+
+  if (isset($result['password']) && $password === $result['password']) {
+    // ログイン成功
+    session_regenerate_id();
+    $_SESSION['id'] = $result['id'];
+    header('Location: ../../index.php');
+    exit();
+  } else {
+    $error['login'] = 'failed';
+    // echo '失敗';
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -21,13 +51,12 @@
   <main class="bg-gray-100 h-screen">
     <div class="w-full mx-auto py-10 px-5">
       <h2 class="text-md font-bold mb-5">ログイン</h2>
-      <form action="/" method="POST">
-        <input type="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3">
-        <input type="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3">
-        <label class="inline-block mb-6">
-          <input type="checkbox" checked>
-          <span class="text-sm">ログイン状態を保持する</span>
-        </label>
+      <form action="" method="POST">
+        <input type="email" name="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" value="<?php echo h($email); ?>" required>
+        <input type="password" name="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" required>
+        <?php if (isset($error['login']) && $error['login'] === 'failed') : ?>
+          <p class="error">* ログインに失敗しました。正しくご記入ください。</p>
+        <?php endif; ?>
         <input type="submit" value="ログイン" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
       </form>
       <div class="text-center text-xs text-gray-400 mt-6">
