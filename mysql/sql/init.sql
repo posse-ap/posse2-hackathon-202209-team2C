@@ -128,8 +128,20 @@ SET
 INSERT INTO events
 SET
     name = 'テストもくもく',
-    start_at = '2022/09/11 00:00',
-    end_at = '2022/09/11 23:00';
+    start_at = '2022/09/12 00:00',
+    end_at = '2022/09/12 23:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく',
+    start_at = '2022/10/12 00:00',
+    end_at = '2022/10/12 23:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく',
+    start_at = '2022/11/12 10:00',
+    end_at = '2022/11/12 13:00';
 
 INSERT INTO event_attendance SET event_id=1;
 
