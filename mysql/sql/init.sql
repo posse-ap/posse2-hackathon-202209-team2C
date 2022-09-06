@@ -131,17 +131,17 @@ SET
     start_at = '2022/09/11 00:00',
     end_at = '2022/09/11 23:00';
 
-INSERT INTO event_attendance SET event_id=1;
+INSERT INTO event_attendance SET event_id=1,user_id=25;
 
-INSERT INTO event_attendance SET event_id=1;
+INSERT INTO event_attendance SET event_id=1,user_id=27;
 
-INSERT INTO event_attendance SET event_id=1;
+INSERT INTO event_attendance SET event_id=1,user_id=28;
 
-INSERT INTO event_attendance SET event_id=2;
+INSERT INTO event_attendance SET event_id=2,user_id=25;
 
-INSERT INTO event_attendance SET event_id=2;
+INSERT INTO event_attendance SET event_id=2,user_id=27;
 
-INSERT INTO event_attendance SET event_id=3;
+INSERT INTO event_attendance SET event_id=3,user_id=25;
 
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
