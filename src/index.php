@@ -3,10 +3,10 @@ session_start();
 require('dbconnect.php');
 
 if (isset($_SESSION['id'])) {
-	$user_id = $_SESSION['id']; //usersのid
+  $user_id = $_SESSION['id']; //usersのid
 } else {
-	header('Location: auth/login/index.php');
-	exit();
+  header('Location: auth/login/index.php');
+  exit();
 }
 
 
@@ -80,15 +80,15 @@ function get_day_of_week($w)
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
 
-        <?php foreach ($from_now_events as $event) : ?>
+        <?php foreach ($from_now_events as $from_now_event) : ?>
           <?php
-          $start_date = strtotime($event['start_at']);
-          $end_date = strtotime($event['end_at']);
+          $start_date = strtotime($from_now_event['start_at']);
+          $end_date = strtotime($from_now_event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           ?>
-          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
+          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $from_now_event['id']; ?>">
             <div>
-              <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
+              <h3 class="font-bold text-lg mb-2"><?php echo $from_now_event['name'] ?></h3>
               <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
               <p class="text-xs text-gray-600">
                 <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
@@ -96,12 +96,12 @@ function get_day_of_week($w)
             </div>
             <div class="flex flex-col justify-between text-right">
               <div>
-                <?php if ($event['id'] % 3 === 1) : ?>
+                <?php if ($from_now_event['id'] % 3 === 1) : ?>
                   <!--
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
                   <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
                   -->
-                <?php elseif ($event['id'] % 3 === 2) : ?>
+                <?php elseif ($from_now_event['id'] % 3 === 2) : ?>
                   <!-- 
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
@@ -111,7 +111,7 @@ function get_day_of_week($w)
                   -->
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
+              <p class="text-sm"><span class="text-xl"><?php echo $from_now_event['total_participants']; ?></span>人参加 ></p>
             </div>
           </div>
         <?php endforeach; ?>
