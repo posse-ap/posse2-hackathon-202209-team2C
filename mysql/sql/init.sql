@@ -46,3 +46,72 @@ INSERT INTO event_attendance SET event_id=1;
 INSERT INTO event_attendance SET event_id=2;
 INSERT INTO event_attendance SET event_id=2;
 INSERT INTO event_attendance SET event_id=3;
+
+
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- ホスト: mysql
+-- 生成日時: 2022 年 9 月 06 日 14:51
+-- サーバのバージョン： 8.0.29
+-- PHP のバージョン: 8.0.19
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- データベース: `posse`
+--
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `members`
+--
+
+CREATE TABLE `members` (
+  `id` int NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `members`
+--
+
+INSERT INTO `members` (`id`, `email`, `password`, `created`) VALUES
+(1, 'email@email', 'pass', '2022-09-06 14:18:11');
+
+--
+-- ダンプしたテーブルのインデックス
+--
+
+--
+-- テーブルのインデックス `members`
+--
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- ダンプしたテーブルの AUTO_INCREMENT
+--
+
+--
+-- テーブルの AUTO_INCREMENT `members`
+--
+ALTER TABLE `members`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
