@@ -44,44 +44,8 @@ $participating_events->execute();
 $participating_events = $participating_events->fetchAll();
 
 
-// ユーザーの参加しないイベント
-$un_participating_events = $db->prepare(
-  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
-  FROM events 
-  LEFT OUTER JOIN event_attendance 
-  ON events.id = event_attendance.event_id 
-  WHERE start_at > now() 
-  AND event_attendance.user_id=:users_id
-  AND event_attendance.status_id=2
-  GROUP BY events.id ORDER BY start_at ASC
-  '
-);
-$un_participating_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
-$un_participating_events->execute();
-$un_participating_events = $un_participating_events->fetchAll();
-
-
-// ユーザーの未解答のイベント
-$unanswered_events = $db->prepare(
-  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
-  FROM events 
-  LEFT OUTER JOIN event_attendance 
-  ON events.id = event_attendance.event_id 
-  WHERE start_at > now() 
-  AND event_attendance.user_id=:users_id
-  AND event_attendance.status_id=0
-  GROUP BY events.id ORDER BY start_at ASC
-  '
-);
-$unanswered_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
-$unanswered_events->execute();
-$unanswered_events = $unanswered_events->fetchAll();
-
-
 
 $events = [];
-
-
 if (isset($_POST['participating'])) {
   $events = $participating_events;
   $background_all = 'bg-gray-800';
@@ -107,6 +71,7 @@ if (isset($_POST['participating'])) {
   $background_unparticipating = 'bg-gray-800';
   $background_unanswerd = 'bg-gray-800';
 }
+
 // 未回答者
 $unanswered_users = $db->prepare(
   'SELECT events.name AS events_name,users.name AS users_name, events.start_at
@@ -177,7 +142,6 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
-
     <div class="w-full mx-auto p-5">
 
       <div id="filter" class="mb-8">
