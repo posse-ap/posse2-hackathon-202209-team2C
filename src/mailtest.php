@@ -35,7 +35,7 @@ $stmt = $db->prepare(
     'SELECT events.name AS event_name,users.id AS user_id, users.name AS users_name, users.email,events.message, events.start_at 
     FROM event_attendance LEFT OUTER JOIN events ON event_attendance.event_id = events.id 
     RIGHT OUTER JOIN users ON event_attendance.user_id = users.id 
-    WHERE start_at < now() + interval 24 hour and start_at > now()'
+    WHERE start_at < now() + interval 24 hour and start_at > now() and status_id = 1'
 );
 $stmt->execute();
 $users = $stmt->fetchAll();
