@@ -4,6 +4,9 @@ require('dbconnect.php');
 
 if (isset($_SESSION['id'])) {
   $user_id = $_SESSION['id']; //usersのid
+  if ($user_id === 1) {
+    $user = 'admin';
+  }
 } else {
   header('Location: auth/login/index.php');
   exit();
@@ -49,11 +52,12 @@ function get_day_of_week($w)
       <div class="h-full">
         <img src="img/header-logo.png" alt="" class="h-full">
       </div>
-      <!-- 
       <div>
-        <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ログイン</a>
+        <?php if ($user === 'admin') : ?>
+          <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">管理者画面へ</a>
+        <?php endif; ?>
+        <a href="/auth/logout.php" class="">ログアウト</a>
       </div>
-      -->
     </div>
   </header>
 
