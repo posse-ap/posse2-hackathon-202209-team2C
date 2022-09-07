@@ -8,8 +8,6 @@ if (isset($_SESSION['id'])) {
   header('Location: auth/login/index.php');
   exit();
 }
-// 参加不参加ボタンのステータスid
-$status_id = $_GET['status_id'];
 
 
 $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
@@ -25,6 +23,105 @@ $from_now_events =
 $from_now_events->bindValue(":today", $today, PDO::PARAM_STR);
 $from_now_events->execute();
 $from_now_events = $from_now_events->fetchAll();
+
+// ユーザーの参加するイベント
+$participating_events = $db->prepare(
+  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  FROM events 
+  LEFT OUTER JOIN event_attendance 
+  ON events.id = event_attendance.event_id 
+  WHERE start_at > now() 
+  AND event_attendance.user_id=:users_id
+  AND event_attendance.status_id=1
+  GROUP BY events.id ORDER BY start_at ASC
+  '
+);
+$participating_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
+$participating_events->execute();
+$participating_events = $participating_events->fetchAll();
+
+
+// ユーザーの参加しないイベント
+$un_participating_events = $db->prepare(
+  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  FROM events 
+  LEFT OUTER JOIN event_attendance 
+  ON events.id = event_attendance.event_id 
+  WHERE start_at > now() 
+  AND event_attendance.user_id=:users_id
+  AND event_attendance.status_id=2
+  GROUP BY events.id ORDER BY start_at ASC
+  '
+);
+$un_participating_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
+$un_participating_events->execute();
+$un_participating_events = $un_participating_events->fetchAll();
+
+
+// ユーザーの未解答のイベント
+$unanswered_events = $db->prepare(
+  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  FROM events 
+  LEFT OUTER JOIN event_attendance 
+  ON events.id = event_attendance.event_id 
+  WHERE start_at > now() 
+  AND event_attendance.user_id=:users_id
+  AND event_attendance.status_id=0
+  GROUP BY events.id ORDER BY start_at ASC
+  '
+);
+$unanswered_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
+$unanswered_events->execute();
+$unanswered_events = $unanswered_events->fetchAll();
+
+
+
+$events = [];
+
+
+if (isset($_POST['participating'])) {
+  $events = $participating_events;
+} elseif (isset($_POST['un_participating'])) {
+  $events = $un_participating_events;
+} elseif (isset($_POST['unanswered'])) {
+  $events = $unanswered_events;
+} else {
+  $events = $from_now_events;
+}
+// 未回答者
+$unanswered_users = $db->prepare(
+  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
+  FROM event_attendance
+  LEFT OUTER JOIN events
+  ON event_attendance.event_id = events.id
+  RIGHT OUTER JOIN users
+  ON event_attendance.user_id = users.id
+  WHERE start_at > now()
+  AND status_id=0
+  ORDER BY events.id
+  '
+);
+$unanswered_users->execute();
+$unanswered_users = $unanswered_users->fetchAll();
+
+// 参加者
+$participating_users = $db->prepare(
+  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
+  FROM event_attendance
+  LEFT OUTER JOIN events
+  ON event_attendance.event_id = events.id
+  RIGHT OUTER JOIN users
+  ON event_attendance.user_id = users.id
+  WHERE start_at > now()
+  AND status_id=1
+  ORDER BY events.id
+  '
+);
+
+$participating_users->execute();
+$participating_users = $participating_users->fetchAll();
+
+
 
 
 function get_day_of_week($w)
@@ -66,10 +163,12 @@ function get_day_of_week($w)
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
-          <a href="/" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">全て</a>
-          <a href="/?status_id=1" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">参加</a>
-          <a href="/?status_id=2" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">不参加</a>
-          <a href="/?status_id=3" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-white">未回答</a>
+          <form action="index.php" method="post">
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="all">全て</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="participating">参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="un_participating">不参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="unanswered">未解答</button>
+          </form>
         </div>
       </div>
 
@@ -78,15 +177,15 @@ function get_day_of_week($w)
           <h2 class="text-sm font-bold">一覧</h2>
         </div>
 
-        <?php foreach ($from_now_events as $from_now_event) : ?>
+        <?php foreach ($events as $event) : ?>
           <?php
-          $start_date = strtotime($from_now_event['start_at']);
-          $end_date = strtotime($from_now_event['end_at']);
+          $start_date = strtotime($event['start_at']);
+          $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           ?>
-          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $from_now_event['id']; ?>">
+          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
             <div>
-              <h3 class="font-bold text-lg mb-2"><?php echo $from_now_event['name'] ?></h3>
+              <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
               <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
               <p class="text-xs text-gray-600">
                 <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
@@ -94,12 +193,12 @@ function get_day_of_week($w)
             </div>
             <div class="flex flex-col justify-between text-right">
               <div>
-                <?php if ($from_now_event['id'] % 3 === 1) : ?>
+                <?php if ($event['id'] % 3 === 1) : ?>
                   <!--
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
                   <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
                   -->
-                <?php elseif ($from_now_event['id'] % 3 === 2) : ?>
+                <?php elseif ($event['id'] % 3 === 2) : ?>
                   <!-- 
                   <p class="text-sm font-bold text-gray-300">不参加</p>
                   -->
@@ -109,7 +208,7 @@ function get_day_of_week($w)
                   -->
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $from_now_event['total_participants']; ?></span>人参加 ></p>
+              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
             </div>
           </div>
         <?php endforeach; ?>
