@@ -24,6 +24,7 @@ CREATE TABLE
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         event_id INT NOT NULL,
         user_id INT,
+        status_id INT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         deleted_at DATETIME
@@ -133,27 +134,57 @@ SET
 
 INSERT INTO events
 SET
-    name = 'テストもくもく',
+    name = 'テストもくもく2',
     start_at = '2022/10/12 00:00',
     end_at = '2022/10/12 23:00';
 
 INSERT INTO events
 SET
-    name = 'テストもくもく',
+    name = 'テストもくもく3',
     start_at = '2022/11/12 10:00',
     end_at = '2022/11/12 13:00';
 
-INSERT INTO event_attendance SET event_id=1,user_id=25;
+INSERT INTO event_attendance
+SET
+    event_id = 16,
+    user_id = 1,
+    status_id = 1;
 
-INSERT INTO event_attendance SET event_id=1,user_id=27;
+INSERT INTO event_attendance
+SET
+    event_id = 16,
+    user_id = 2,
+    status_id = 1;
 
-INSERT INTO event_attendance SET event_id=1,user_id=28;
+INSERT INTO event_attendance
+SET
+    event_id = 16,
+    user_id = 3,
+    status_id = 0;
 
-INSERT INTO event_attendance SET event_id=2,user_id=25;
+INSERT INTO event_attendance
+SET
+    event_id = 17,
+    user_id = 1,
+    status_id = 0;
 
-INSERT INTO event_attendance SET event_id=2,user_id=27;
+INSERT INTO event_attendance
+SET
+    event_id = 17,
+    user_id = 2,
+    status_id = 0;
 
-INSERT INTO event_attendance SET event_id=3,user_id=25;
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 2,
+    status_id = 0;
 
 -- phpMyAdmin SQL Dump
 

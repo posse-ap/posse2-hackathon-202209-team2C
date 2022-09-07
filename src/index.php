@@ -22,12 +22,30 @@ $today = date("Y/m/d");
 // 当日以降のイベントを取得する
 $from_now_events =
   $db->prepare(
-    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > :today GROUP BY events.id ORDER BY start_at ASC'
+    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() GROUP BY events.id ORDER BY start_at ASC'
   );
-
-$from_now_events->bindValue(":today", $today, PDO::PARAM_STR);
 $from_now_events->execute();
 $from_now_events = $from_now_events->fetchAll();
+
+
+// 未回答者
+$unanswered_users = $db->prepare(
+  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
+  FROM event_attendance
+  LEFT OUTER JOIN events
+  ON event_attendance.event_id = events.id
+  RIGHT OUTER JOIN users
+  ON event_attendance.user_id = users.id
+  WHERE start_at > now()
+  AND status_id=0
+  ORDER BY events.id
+  '
+);
+
+$unanswered_users->execute();
+$unanswered_users = $unanswered_users->fetchAll();
+
+
 
 
 function get_day_of_week($w)
@@ -64,6 +82,9 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
+    <?php
+    var_dump($unanswered_users);
+    ?>
     <div class="w-full mx-auto p-5">
       <!-- 
       <div id="filter" class="mb-8">
