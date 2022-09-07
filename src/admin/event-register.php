@@ -9,17 +9,21 @@ if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-    $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-	$form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+    $form['message'] = filter_input(INPUT_POST, 'message', FILTER_UNSAFE_RAW);
+    $form['start_at'] = filter_input(INPUT_POST, 'start_at', FILTER_SANITIZE_NUMBER_INT);
+	$form['end_at'] = filter_input(INPUT_POST, 'end_at', FILTER_SANITIZE_NUMBER_INT);
 
-	$stmt = $db->prepare('insert into users (name, email, password) VALUES (?, ?, ?)');
-	$password = password_hash($form['password'], PASSWORD_DEFAULT);
-	$stmt->bindValue(1, $form['name']);
-	$stmt->bindValue(2, $form['email']);
-	$stmt->bindValue(3, $password);
+	$stmt = $db->prepare('insert into events (name, message, start_at, end_at) VALUES (?, ?, ?, ?)');
+    $stmt->bindValue(1, $form['name']);
+    $stmt->bindValue(2, $form['message']);
+    $start_at = new DateTime($form['start_at']);
+    $stmt->bindValue(3, $start_at->format('Y-m-d H:i:s'));
+    $end_at = new DateTime($form['end_at']);
+	$stmt->bindValue(4, $end_at->format('Y-m-d H:i:s'));
 	$stmt->execute();
 	header('Location: index.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -52,11 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="w-full mx-auto py-10 px-5">
             <ul>
                 <div class="w-full mx-auto py-10 px-5">
-                    <h2 class="text-md font-bold mb-5">ユーザー登録</h2>
+                    <h2 class="text-md font-bold mb-5">イベント登録</h2>
                     <form action="" method="POST">
-                        <input type="name" name="name" placeholder="名前" class="w-full p-4 text-sm mb-3" required>
-                        <input type="email" name="email" placeholder="メールアドレス" class="w-full p-4 text-sm mb-3" required>
-                        <input type="password" name="password" placeholder="パスワード" class="w-full p-4 text-sm mb-3" required>
+                        <input type="name" name="name" placeholder="イベント名" class="w-full p-4 text-sm mb-3" required>
+                        <input type="datetime-local" name="start_at" placeholder="開始日時" class="w-full p-4 text-sm mb-3" required>
+                        <input type="datetime-local" name="end_at" placeholder="終了日時" class="w-full p-4 text-sm mb-3" required>
+                        <input type="text" name="message" placeholder="イベント内容" class="w-full p-4 text-sm mb-3" required>
                         <input type="submit" value="登録" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
                     </form>
                 </div>
