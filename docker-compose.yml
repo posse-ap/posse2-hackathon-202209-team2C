@@ -39,7 +39,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
-      - db
+      - mysql
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOSTS=mysql

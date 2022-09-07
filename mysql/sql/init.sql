@@ -144,72 +144,53 @@ INSERT INTO event_attendance SET event_id=2,user_id=27;
 INSERT INTO event_attendance SET event_id=3,user_id=25;
 
 -- phpMyAdmin SQL Dump
+
 -- version 5.2.0
+
 -- https://www.phpmyadmin.net/
---
--- ホスト: mysql
--- 生成日時: 2022 年 9 月 06 日 17:04
--- サーバのバージョン： 8.0.29
--- PHP のバージョン: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
 START TRANSACTION;
+
 SET time_zone = "+00:00";
 
+CREATE TABLE
+    users (
+        id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+        email varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
+        password varchar(100) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        AUTO_INCREMENT,
+        deleted_at DATETIME
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3 COLLATE = utf8_unicode_ci;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+INSERT INTO users
+SET
+    name = '岩村',
+    email = 'email1@email',
+    password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
+    created_at = '2022/09/11 23:00';
 
---
--- データベース: `posse`
---
+INSERT INTO users
+SET
+    name = '小谷',
+    email = 'email2@email',
+    password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
+    created_at = '2022/09/11 23:00';
 
--- --------------------------------------------------------
+INSERT INTO users
+SET
+    name = '信田',
+    email = 'email3@email',
+    password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
+    created_at = '2022/09/11 23:00';
 
---
--- テーブルの構造 `users`
---
-
-CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
-
---
--- テーブルのデータのダンプ `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created`) VALUES
-(25, '岩村', 'email1@email', '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm', '2022-09-06 16:46:18'),
-(27, '小谷', 'email2@email', '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm', '2022-09-06 16:46:18'),
-(28, '信田', 'email3@email', '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm', '2022-09-06 16:46:18');
-
---
--- ダンプしたテーブルのインデックス
---
-
---
--- テーブルのインデックス `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- ダンプしたテーブルの AUTO_INCREMENT
---
-
---
--- テーブルの AUTO_INCREMENT `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO users
+SET
+    name = '信田',
+    email = 'email3@email',
+    password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
+    created_at = '2022/09/11 23:00';
