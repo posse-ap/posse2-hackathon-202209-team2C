@@ -2,7 +2,10 @@
 session_start();
 require('../dbconnect.php');
 
-
+if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
+    header('Location: /auth/logout.php');
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
