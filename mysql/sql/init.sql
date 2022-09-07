@@ -10,6 +10,7 @@ CREATE TABLE
     events (
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         name VARCHAR(10) NOT NULL,
+        message VARCHAR(100) NULL,
         start_at DATETIME,
         end_at DATETIME,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
