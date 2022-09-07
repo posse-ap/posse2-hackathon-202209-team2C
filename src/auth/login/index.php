@@ -3,15 +3,15 @@ session_start();
 require('../../dbconnect.php');
 
 //  ダミーデータ挿入 passwordハッシュ化
-$form = [
-  'email' => 'email@email',
-  'password' => 'pass'
-];
-$stmt = $db->prepare('insert into users (email, password) VALUES (?, ?)');
-$password = password_hash($form['password'], PASSWORD_DEFAULT);
-$stmt->bindValue(1, $form['email']);
-$stmt->bindValue(2, $password);
-$stmt->execute();
+// $form = [
+//   'email' => 'email@email',
+//   'password' => 'pass'
+// ];
+// $stmt = $db->prepare('insert into users (email, password) VALUES (?, ?)');
+// $password = password_hash($form['password'], PASSWORD_DEFAULT);
+// $stmt->bindValue(1, $form['email']);
+// $stmt->bindValue(2, $password);
+// $stmt->execute();
 
 $error = [];
 $email = '';
