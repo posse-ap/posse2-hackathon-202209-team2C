@@ -44,14 +44,69 @@ $participating_events->execute();
 $participating_events = $participating_events->fetchAll();
 
 
+// ユーザーの参加しないイベント
+$un_participating_events = $db->prepare(
+  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  FROM events 
+  LEFT OUTER JOIN event_attendance 
+  ON events.id = event_attendance.event_id 
+  WHERE start_at > now() 
+  AND event_attendance.user_id=:users_id
+  AND event_attendance.status_id=2
+  GROUP BY events.id ORDER BY start_at ASC
+  '
+);
+$un_participating_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
+$un_participating_events->execute();
+$un_participating_events = $un_participating_events->fetchAll();
+
+
+// ユーザーの未解答のイベント
+$unanswered_events = $db->prepare(
+  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  FROM events 
+  LEFT OUTER JOIN event_attendance 
+  ON events.id = event_attendance.event_id 
+  WHERE start_at > now() 
+  AND event_attendance.user_id=:users_id
+  AND event_attendance.status_id=0
+  GROUP BY events.id ORDER BY start_at ASC
+  '
+);
+$unanswered_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
+$unanswered_events->execute();
+$unanswered_events = $unanswered_events->fetchAll();
+
+
 
 $events = [];
+
+
 if (isset($_POST['participating'])) {
   $events = $participating_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-blue-600';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-gray-800';
+} elseif (isset($_POST['un_participating'])) {
+  $events = $un_participating_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-blue-600';
+  $background_unanswerd = 'bg-gray-800';
+} elseif (isset($_POST['unanswered'])) {
+  $events = $unanswered_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-blue-600';
 } else {
   $events = $from_now_events;
+  $background_all = 'bg-blue-600';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-gray-800';
 }
-
 // 未回答者
 $unanswered_users = $db->prepare(
   'SELECT events.name AS events_name,users.name AS users_name, events.start_at
@@ -122,24 +177,17 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
+
     <div class="w-full mx-auto p-5">
 
       <div id="filter" class="mb-8">
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
           <form action="index.php" method="post">
-            <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">
-              <button type="submit" name="all">全て</button>
-            </a>
-            <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">
-              <button type="submit" name="participating">参加</button>
-            </a>
-            <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">
-              <button type="submit" name="un_participating">不参加</button>
-            </a>
-            <a href="" class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white">
-              <button type="submit" name="unanswerd">未解答</button>
-            </a>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md text-white <?= $background_all ?>" type="submit" name="all">全て</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_participating ?> text-white" type="submit" name="participating">参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_unparticipating ?> text-white" type="submit" name="un_participating">不参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_unanswerd ?> text-white" type="submit" name="unanswered">未解答</button>
           </form>
         </div>
       </div>
