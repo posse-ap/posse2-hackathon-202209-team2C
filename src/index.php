@@ -84,12 +84,28 @@ $events = [];
 
 if (isset($_POST['participating'])) {
   $events = $participating_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-blue-600';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-gray-800';
 } elseif (isset($_POST['un_participating'])) {
   $events = $un_participating_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-blue-600';
+  $background_unanswerd = 'bg-gray-800';
 } elseif (isset($_POST['unanswered'])) {
   $events = $unanswered_events;
+  $background_all = 'bg-gray-800';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-blue-600';
 } else {
   $events = $from_now_events;
+  $background_all = 'bg-blue-600';
+  $background_participating = 'bg-gray-800';
+  $background_unparticipating = 'bg-gray-800';
+  $background_unanswerd = 'bg-gray-800';
 }
 // 未回答者
 $unanswered_users = $db->prepare(
@@ -168,10 +184,10 @@ function get_day_of_week($w)
         <h2 class="text-sm font-bold mb-3">フィルター</h2>
         <div class="flex">
           <form action="index.php" method="post">
-            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="all">全て</button>
-            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="participating">参加</button>
-            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="un_participating">不参加</button>
-            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md bg-blue-600 text-white" type="submit" name="unanswered">未解答</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md text-white <?= $background_all ?>" type="submit" name="all">全て</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_participating ?> text-white" type="submit" name="participating">参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_unparticipating ?> text-white" type="submit" name="un_participating">不参加</button>
+            <button class="px-3 py-2 text-md font-bold mr-2 rounded-md shadow-md <?= $background_unanswerd ?> text-white" type="submit" name="unanswered">未解答</button>
           </form>
         </div>
       </div>

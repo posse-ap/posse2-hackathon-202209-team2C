@@ -100,7 +100,7 @@ async function participateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -112,3 +112,7 @@ async function participateEvent(eventId) {
   }
 }
 
+const clicked = () => {
+  document.getElementById('filtter-button-participating').classList.remove('bg-blue-600');
+
+}
