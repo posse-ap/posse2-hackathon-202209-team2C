@@ -1,5 +1,6 @@
 'use strict'
 const openModalClassList = document.querySelectorAll('.modal-open')
+console.log(openModalClassList)
 const closeModalClassList = document.querySelectorAll('.modal-close')
 const overlay = document.querySelector('.modal-overlay')
 const body = document.querySelector('body')
@@ -100,7 +101,7 @@ async function participateEvent(eventId) {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -111,4 +112,6 @@ async function participateEvent(eventId) {
     console.log(error)
   }
 }
+
+
 
