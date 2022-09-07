@@ -4,6 +4,11 @@ require('dbconnect.php');
 
 if (isset($_SESSION['id'])) {
   $user_id = $_SESSION['id']; //usersのid
+  if ($user_id === 1) {
+    $_SESSION['admin'] = true;
+  } else {
+    $_SESSION['admin'] = false;
+  }
 } else {
   header('Location: auth/login/index.php');
   exit();
@@ -17,10 +22,8 @@ $today = date("Y/m/d");
 // 当日以降のイベントを取得する
 $from_now_events =
   $db->prepare(
-    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > :today GROUP BY events.id ORDER BY start_at ASC'
+    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() GROUP BY events.id ORDER BY start_at ASC'
   );
-
-$from_now_events->bindValue(":today", $today, PDO::PARAM_STR);
 $from_now_events->execute();
 $from_now_events = $from_now_events->fetchAll();
 
@@ -148,11 +151,12 @@ function get_day_of_week($w)
       <div class="h-full">
         <img src="img/header-logo.png" alt="" class="h-full">
       </div>
-      <!-- 
       <div>
-        <a href="/auth/login" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ログイン</a>
+        <?php if ($_SESSION['admin']) : ?>
+          <a href="/admin" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">管理者画面へ</a>
+        <?php endif; ?>
+        <a href="/auth/logout.php" class="">ログアウト</a>
       </div>
-      -->
     </div>
   </header>
 
