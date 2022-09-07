@@ -184,9 +184,15 @@ SET
 
 INSERT INTO event_attendance
 SET
+    event_id = 16,
+    user_id = 4,
+    status_id = 1;
+
+INSERT INTO event_attendance
+SET
     event_id = 17,
     user_id = 1,
-    status_id = 1;
+    status_id = 0;
 
 INSERT INTO event_attendance
 SET
@@ -196,8 +202,44 @@ SET
 
 INSERT INTO event_attendance
 SET
+    event_id = 17,
+    user_id = 3,
+    status_id = 1;
+
+INSERT INTO event_attendance
+SET
+    event_id = 17,
+    user_id = 4,
+    status_id = 2;
+
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
     event_id = 18,
     user_id = 2,
+    status_id = 2;
+
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 4,
+    status_id = 2;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 1,
     status_id = 0;
 
 INSERT INTO event_attendance
@@ -205,6 +247,18 @@ SET
     event_id = 19,
     user_id = 2,
     status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 3,
+    status_id = 2;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 4,
+    status_id = 1;
 
 -- phpMyAdmin SQL Dump
 
@@ -217,6 +271,8 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 
 SET time_zone = "+00:00";
+
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE
     users (
