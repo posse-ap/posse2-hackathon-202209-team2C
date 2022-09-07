@@ -1,6 +1,12 @@
 <?php
 session_start();
 require('../dbconnect.php');
+
+if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
+    header('Location: /auth/logout.php');
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -21,7 +27,7 @@ require('../dbconnect.php');
             </div>
             <div>
                 <?php if ($_SESSION['admin']) : ?>
-                    <a href="/admin" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ユーザー画面へ</a>
+                    <a href="../index.php" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ユーザー画面へ</a>
                 <?php endif; ?>
                 <a href="/auth/logout.php" class="">ログアウト</a>
             </div>
@@ -33,6 +39,7 @@ require('../dbconnect.php');
         <div class="w-full mx-auto py-10 px-5">
             <ul>
                 <li><a href="user-register.php">・ユーザー登録</a></li>
+                <li><a href="event-register.php">・イベント登録</a></li>
             </ul>
         </div>
     </main>
