@@ -6,7 +6,7 @@ if (isset($_SESSION['id'])) {
   $user_id = $_SESSION['id']; //usersのid
   if ($user_id === 1) {
     $_SESSION['admin'] = true;
-  }else{
+  } else {
     $_SESSION['admin'] = false;
   }
 } else {
@@ -41,9 +41,25 @@ $unanswered_users = $db->prepare(
   ORDER BY events.id
   '
 );
-
 $unanswered_users->execute();
 $unanswered_users = $unanswered_users->fetchAll();
+
+// 参加者
+$participating_users = $db->prepare(
+  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
+  FROM event_attendance
+  LEFT OUTER JOIN events
+  ON event_attendance.event_id = events.id
+  RIGHT OUTER JOIN users
+  ON event_attendance.user_id = users.id
+  WHERE start_at > now()
+  AND status_id=1
+  ORDER BY events.id
+  '
+);
+
+$participating_users->execute();
+$participating_users = $participating_users->fetchAll();
 
 
 
