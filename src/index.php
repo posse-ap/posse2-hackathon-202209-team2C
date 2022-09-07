@@ -27,7 +27,7 @@ $from_now_events = $from_now_events->fetchAll();
 
 // 未回答者
 $unanswered_users = $db->prepare(
-  'SELECT events.name AS events_name,users.name AS users_name, events.start_at, event_attendance.status_id
+  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
   FROM event_attendance
   LEFT OUTER JOIN events
   ON event_attendance.event_id = events.id
@@ -79,7 +79,7 @@ function get_day_of_week($w)
 
   <main class="bg-gray-100">
     <?php
-    var_dump($non_participating_users);
+    var_dump($unanswered_users);
     ?>
     <div class="w-full mx-auto p-5">
       <!-- 
