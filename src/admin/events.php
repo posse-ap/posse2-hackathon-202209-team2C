@@ -6,7 +6,6 @@ if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
     header('Location: /auth/logout.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -34,14 +33,31 @@ if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
         </div>
     </header>
 
-
     <main class="bg-gray-100 h-screen">
         <div class="w-full mx-auto py-10 px-5">
-            <ul>
-                <li><a href="user-register.php">・ユーザー登録</a></li>
-                <li><a href="event-register.php">・イベント登録</a></li>
-                <li><a href="events.php">・イベント編集</a></li>
-            </ul>
+            <?php
+            $stmt = $db->prepare('select id, name, message, start_at, end_at from events  order by start_at asc');
+            $stmt->execute();
+
+            $events = $stmt->fetchAll();
+            foreach ($events as $event) : ?>
+                <?php
+                $start_date = strtotime($event['start_at']);
+                $end_date = strtotime($event['end_at']);
+                ?>
+                <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
+                    <div>
+                        <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
+                        <p><?php echo h($event['start_at']); ?> ~ <?php echo h($event['end_at']); ?></p>
+                        <?php if ($event['message']) : ?>
+                            <div><?php echo ($event['message']); ?></div>
+                        <?php endif; ?>
+                        <p class="text-xs text-gray-600">
+                            [<a href="event-edit.php?id=<?php echo h($event['id']); ?>" style="color: #F33;">編集</a>]
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </main>
 </body>
