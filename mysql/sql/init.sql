@@ -34,114 +34,133 @@ CREATE TABLE
 INSERT INTO events
 SET
     name = '縦モク',
+    message = '縦モク詳細',
     start_at = '2021/08/01 21:00',
     end_at = '2021/08/01 23:00';
 
 INSERT INTO events
 SET
     name = '横モク',
+    message = '横モク詳細',
     start_at = '2021/08/02 21:00',
     end_at = '2021/08/02 23:00';
 
 INSERT INTO events
 SET
     name = 'スペモク',
+    message = 'スペモク詳細',
     start_at = '2021/08/03 20:00',
     end_at = '2021/08/03 22:00';
 
 INSERT INTO events
 SET
     name = '縦モク',
+    message = '縦モクもくもくかい',
     start_at = '2021/08/08 21:00',
     end_at = '2021/08/08 23:00';
 
 INSERT INTO events
 SET
     name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/09 21:00',
     end_at = '2021/08/09 23:00';
 
 INSERT INTO events
 SET
     name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/10 20:00',
     end_at = '2021/08/10 22:00';
 
 INSERT INTO events
 SET
     name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/15 21:00',
     end_at = '2021/08/15 23:00';
 
 INSERT INTO events
 SET
     name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/16 21:00',
     end_at = '2021/08/16 23:00';
 
 INSERT INTO events
 SET
     name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/17 20:00',
     end_at = '2021/08/17 22:00';
 
 INSERT INTO events
 SET
     name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/22 21:00',
     end_at = '2021/08/22 23:00';
 
 INSERT INTO events
 SET
     name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/23 21:00',
     end_at = '2021/08/23 23:00';
 
 INSERT INTO events
 SET
     name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/08/24 20:00',
     end_at = '2021/08/24 22:00';
 
 INSERT INTO events
 SET
     name = '遊び',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/09/22 18:00',
     end_at = '2021/09/22 22:00';
 
 INSERT INTO events
 SET
     name = 'ハッカソン',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/09/03 10:00',
     end_at = '2021/09/03 22:00';
 
 INSERT INTO events
 SET
     name = '遊び',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2021/09/06 18:00',
     end_at = '2021/09/06 22:00';
 
 INSERT INTO events
 SET
     name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/09/11 00:00',
     end_at = '2022/09/11 23:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/09/12 00:00',
     end_at = '2022/09/12 23:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく2',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/10/12 00:00',
     end_at = '2022/10/12 23:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく3',
+    message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/11/12 10:00',
     end_at = '2022/11/12 13:00';
 
