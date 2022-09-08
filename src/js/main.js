@@ -26,6 +26,7 @@ async function openModal(eventId) {
     const url = '/api/getModalInfo.php?eventId=' + eventId
     const res = await fetch(url)
     const event = await res.json()
+    console.dir(event.total_participants['total_participants'] || (Number(false)));
     let modalHTML = `
       <h2 class="text-md font-bold mb-3">${event.name}</h2>
       <p class="text-sm">${event.date}（${event.day_of_week}）</p>
@@ -39,7 +40,7 @@ async function openModal(eventId) {
 
       <hr class="my-4">
 
-      <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
+      <p class="text-sm"><span class="text-xl">${event.total_participants['total_participants'] || 0}</span>人参加 ></p>
     `
     switch (event.status_id) {
       case 0:

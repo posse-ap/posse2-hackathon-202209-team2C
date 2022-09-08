@@ -16,6 +16,14 @@ if (isset($_GET['eventId'])) {
     $stmt->execute(array($user_id, $eventId));
     $status_id = $stmt->fetch();
 
+    // 参加ユーザー数取得
+    $stmt = $db->prepare('SELECT events.id ,count(event_attendance.id) AS total_participants 
+    FROM events 
+    LEFT JOIN event_attendance ON events.id = event_attendance.event_id 
+    WHERE events.id =? AND status_id=1 GROUP BY events.id');
+    $stmt->execute(array($eventId));
+    $total_participants = $stmt->fetch();
+
 
     $start_date = strtotime($event['start_at']);
     $end_date = strtotime($event['end_at']);
@@ -31,7 +39,7 @@ if (isset($_GET['eventId'])) {
       'day_of_week' => get_day_of_week(date("w", $start_date)),
       'start_at' => date("H:i", $start_date),
       'end_at' => date("H:i", $end_date),
-      'total_participants' => $event['total_participants'],
+      'total_participants' => $total_participants,
       'message' => $event['message'],
       'status' => $status,
       'status_id' => $status_id['status_id'],

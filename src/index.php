@@ -123,22 +123,22 @@ $unanswered_users = $db->prepare(
 $unanswered_users->execute();
 $unanswered_users = $unanswered_users->fetchAll();
 
-// 参加者
-$participating_users = $db->prepare(
-  'SELECT events.name AS events_name,users.name AS users_name, events.start_at
-  FROM event_attendance
-  LEFT OUTER JOIN events
-  ON event_attendance.event_id = events.id
-  RIGHT OUTER JOIN users
-  ON event_attendance.user_id = users.id
-  WHERE start_at > now()
-  AND status_id=1
-  ORDER BY events.id
-  '
-);
+// // 参加者
+// $participating_users = $db->prepare(
+//   'SELECT events.name AS events_name,users.name AS users_name, events.start_at,count(event_attendance.id)
+//   FROM event_attendance
+//   LEFT OUTER JOIN events
+//   ON event_attendance.event_id = events.id
+//   RIGHT OUTER JOIN users
+//   ON event_attendance.user_id = users.id
+//   WHERE start_at > now()
+//   AND status_id=1
+//   ORDER BY events.id
+//   '
+// );
 
-$participating_users->execute();
-$participating_users = $participating_users->fetchAll();
+// $participating_users->execute();
+// $participating_users = $participating_users->fetch();
 
 
 
@@ -199,6 +199,21 @@ function get_day_of_week($w)
 
         <?php foreach ($events as $event) : ?>
           <?php
+          $participating_users = $db->prepare(
+            'SELECT count(event_attendance.id) AS total_participants 
+              FROM event_attendance
+              LEFT OUTER JOIN events
+              ON event_attendance.event_id = events.id
+              WHERE start_at > now()
+              AND event_attendance.event_id=?
+              AND status_id=1
+              ORDER BY events.id
+              '
+          );
+          $participating_users->execute(array($event['id']));
+          $participating_users = $participating_users->fetch();
+          ?>
+          <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
@@ -228,7 +243,7 @@ function get_day_of_week($w)
                   -->
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $event['total_participants']; ?></span>人参加 ></p>
+              <p class="text-sm"><span class="text-xl"><?php echo $participating_users['total_participants']; ?></span>人参加 ></p>
             </div>
           </div>
         <?php endforeach; ?>
