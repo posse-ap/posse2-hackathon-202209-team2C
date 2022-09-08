@@ -252,7 +252,9 @@ function get_day_of_week($w)
       </div>
     </div>
   </div>
-
+  <script type="text/javascript">
+    let userId = <?php echo $user_id ?>;
+  </script>
   <script src="/js/main.js"></script>
 </body>
 

@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // eventID取得
     $stmt = $db->query('SELECT id FROM events  ORDER BY id DESC LIMIT 1');
     $event_id = $stmt->fetch();
-    var_dump($event_id);
     // ユーザーの数取得
     $stmt = $db->query('SELECT * FROM users  ORDER BY id ASC');
     $users = $stmt->fetchAll();
