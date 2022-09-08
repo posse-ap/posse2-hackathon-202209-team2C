@@ -30,7 +30,7 @@ foreach ($set as $s) :
     endforeach;
     $text = "明日のイベントのリマインド \n イベント名:" . $s['event_name'] . "\n 開催日時:" . $s['start_at'] . "\n 詳細:" . $s['message'] .  "\n 参加者: \n" . $invite_events;
 
-    $url = "https://hooks.slack.com/services/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";
+    $url = "https://hooks.slack.com/services/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";
     $message = [
         "channel" => "#slackbot-posse2-hackathon-202209-team2c",
         "text" => $text
