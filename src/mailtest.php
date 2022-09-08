@@ -52,8 +52,8 @@ foreach ($users as $user) :
     $set[$user['user_id']]['event_tomorrow']['event_id']['event_detail'] = $user['message'];
 endforeach;
 
-echo '<pre>'; 
-    var_dump($set);
+echo '<pre>';
+var_dump($set);
 echo '</pre>';
 
 // ここからメール
@@ -82,7 +82,7 @@ foreach ($set as $s) :
 
     $invite_events = '';
     foreach ($s['event_tomorrow'] as $invite_event) :
-        $invite_events .= "・" . $invite_event['event_name'] . " 詳細：".  $invite_event['event_detail'] ."\n  ";
+        $invite_events .= "・" . $invite_event['event_name'] . " 詳細：" .  $invite_event['event_detail'] . "\n  ";
     endforeach;
 
     $body = <<<EOT
