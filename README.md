@@ -16,20 +16,28 @@ docker-compose up -d
 ###　　ログインについて
 
 管理者ユーザー：岩村
+```bash
 メールアドレス：email1@email
 パスワード：pass
+```
 
 一般ユーザー①：小谷
+```bash
 メールアドレス：email2@email
 パスワード：pass
+```
 
 一般ユーザー②：信田
+```bash
 メールアドレス：email2@email
 パスワード：pass
+```
 
 一般ユーザー③：のぶ
+```bash
 メールアドレス：email2@email
 パスワード：pass
+```
 
 手順
 1.ブラウザで `http://localhost` にアクセス,
