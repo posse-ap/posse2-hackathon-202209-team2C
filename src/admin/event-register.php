@@ -11,17 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
     $form['message'] = filter_input(INPUT_POST, 'message', FILTER_UNSAFE_RAW);
     $form['start_at'] = filter_input(INPUT_POST, 'start_at', FILTER_SANITIZE_NUMBER_INT);
-	$form['end_at'] = filter_input(INPUT_POST, 'end_at', FILTER_SANITIZE_NUMBER_INT);
+    $form['end_at'] = filter_input(INPUT_POST, 'end_at', FILTER_SANITIZE_NUMBER_INT);
 
-	$stmt = $db->prepare('insert into events (name, message, start_at, end_at) VALUES (?, ?, ?, ?)');
+    $stmt = $db->prepare('insert into events (name, message, start_at, end_at) VALUES (?, ?, ?, ?)');
     $stmt->bindValue(1, $form['name']);
     $stmt->bindValue(2, $form['message']);
     $start_at = new DateTime($form['start_at']);
     $stmt->bindValue(3, $start_at->format('Y-m-d H:i:s'));
     $end_at = new DateTime($form['end_at']);
-	$stmt->bindValue(4, $end_at->format('Y-m-d H:i:s'));
-	$stmt->execute();
-	header('Location: index.php');
+    $stmt->bindValue(4, $end_at->format('Y-m-d H:i:s'));
+    $stmt->execute();
+
+    // userの数だけevent_attendanceにデータを入れる　
+    // eventID取得
+    $stmt = $db->query('SELECT id FROM events  ORDER BY id DESC LIMIT 1');
+    $event_id = $stmt->fetch();
+    // ユーザーの数取得
+    $stmt = $db->query('SELECT * FROM users  ORDER BY id ASC');
+    $users = $stmt->fetchAll();
+    foreach ($users as $user) {
+        $stmt = $db->prepare('insert into event_attendance (event_id, user_id, status_id ) VALUES (?, ?, ? )');
+        $stmt->bindValue(1, $event_id['id']);
+        $stmt->bindValue(2, $user['id']);
+        $stmt->bindValue(3, 0);
+        $stmt->execute();
+    };
+    header('Location: index.php');
 }
 
 ?>

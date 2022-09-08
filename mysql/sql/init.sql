@@ -168,19 +168,25 @@ INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 1,
-    status_id = 1;
+    status_id = 0;
 
 INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 2,
-    status_id = 1;
+    status_id = 0;
 
 INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 3,
-    status_id = 1;
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 16,
+    user_id = 4,
+    status_id = 0;
 
 INSERT INTO event_attendance
 SET
@@ -196,14 +202,62 @@ SET
 
 INSERT INTO event_attendance
 SET
+    event_id = 17,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 17,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
     event_id = 18,
     user_id = 2,
     status_id = 0;
 
 INSERT INTO event_attendance
 SET
+    event_id = 18,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 18,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
     event_id = 19,
     user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 19,
+    user_id = 4,
     status_id = 0;
 
 -- phpMyAdmin SQL Dump
