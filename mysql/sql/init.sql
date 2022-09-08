@@ -169,6 +169,162 @@ SET
     end_at = '2022/11/12 13:00',
     deadline_at = '2022/11/12 09:00';
 
+INSERT INTO events
+SET
+    name = '縦モク',
+    message = '縦モク詳細',
+    start_at = '2022/11/13 21:00',
+    end_at = '2022/11/14 23:00',
+    deadline_at = '2022/11/12 09:00';
+
+
+INSERT INTO events
+SET
+    name = '横モク',
+    message = '横モク詳細',
+    start_at = '2022/11/14 21:00',
+    end_at = '2022/11/15 23:00',
+    deadline_at = '2022/11/14 09:00';
+
+
+INSERT INTO events
+SET
+    name = 'スペモク',
+    message = 'スペモク詳細',
+    start_at = '2022/11/15 20:00',
+    end_at = '2022/11/15 22:00',
+    deadline_at = '2022/11/15 09:00';
+
+INSERT INTO events
+SET
+    name = '縦モク',
+    message = '縦モクもくもくかい',
+    start_at = '2022/11/16 21:00',
+    end_at = '2022/11/16 23:00',
+    deadline_at = '2022/11/16 09:00';
+
+INSERT INTO events
+SET
+    name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/17 21:00',
+    end_at = '2022/11/17 23:00',
+    deadline_at = '2022/11/16 09:00';
+
+INSERT INTO events
+SET
+    name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/18 20:00',
+    end_at = '2022/11/18 22:00',
+    deadline_at = '2022/11/17 09:00';
+
+INSERT INTO events
+SET
+    name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/18 22:30',
+    end_at = '2022/11/18 23:00',
+    deadline_at = '2022/11/18 09:00';
+
+INSERT INTO events
+SET
+    name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/19 21:00',
+    end_at = '2021/11/19 23:00',
+    deadline_at = '2022/11/19 09:00';
+
+INSERT INTO events
+SET
+    name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/20 20:00',
+    end_at = '2022/11/20 22:00',
+    deadline_at = '2022/11/19 09:00';
+
+INSERT INTO events
+SET
+    name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/21 21:00',
+    end_at = '2022/11/22 23:00',
+    deadline_at = '2022/12/10 09:00';
+
+INSERT INTO events
+SET
+    name = '横モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/23 21:00',
+    end_at = '2022/11/24 23:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = 'スペモク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/25 20:00',
+    end_at = '2022/11/26 22:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = '遊び',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/11/28 18:00',
+    end_at = '2022/11/28 22:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = 'ハッカソン',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/03 10:00',
+    end_at = '2022/12/03 22:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = '遊び',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/20 18:00',
+    end_at = '2022/12/20 22:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = '縦モク',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/23 00:00',
+    end_at = '2022/12/23 23:00',
+    deadline_at = '2022/11/10 09:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/24 00:00',
+    end_at = '2022/12/24 23:00',
+    deadline_at = '2022/12/23 09:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく2',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/25 00:00',
+    end_at = '2022/12/25 23:00',
+    deadline_at = '2022/12/24 09:00';
+
+INSERT INTO events
+SET
+    name = 'テストもくもく3',
+    message = 'もくもくかい、開催楽しみにしててね',
+    start_at = '2022/12/26 10:00',
+    end_at = '2022/12/26 13:00',
+    deadline_at = '2022/12/25 09:00';
+
+
+
 INSERT INTO event_attendance
 SET
     event_id = 16,
@@ -265,6 +421,441 @@ SET
     user_id = 4,
     status_id = 0;
 
+INSERT INTO event_attendance
+SET
+    event_id = 20,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 20,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 20,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 20,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 21,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 21,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 21,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 22,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 23,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 23,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 23,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 24,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 25,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 25,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 25,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 25,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 26,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 26,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 26,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 26,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 27,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 27,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 27,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 27,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 28,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 28,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 28,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 28,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 29,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 29,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 29,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 29,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 30,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 30,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 30,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 30,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 31,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 31,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 31,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 31,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 32,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 32,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 32,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 32,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 33,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 33,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 33,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 33,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 34,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 34,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 34,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 34,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 35,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 35,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 35,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 35,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 36,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 36,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 36,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 36,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 37,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 37,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 37,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 37,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 38,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 38,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 38,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 38,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 39,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 39,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 39,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 39,
+    user_id = 4,
+    status_id = 0;
+
+
+
+
 -- phpMyAdmin SQL Dump
 
 -- version 5.2.0
@@ -290,7 +881,7 @@ CREATE TABLE
         register_token_sent_at DATETIME,
         register_token_verified_at DATETIME,
         status ENUM('tentative', 'public') DEFAULT 'tentative'
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3 COLLATE = utf8_unicode_ci;
+    )  DEFAULT CHARSET = utf8mb3 COLLATE = utf8_unicode_ci;
 
 INSERT INTO users
 SET
