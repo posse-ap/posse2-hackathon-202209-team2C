@@ -22,14 +22,17 @@ $today = date("Y/m/d");
 // 当日以降のイベントを取得する
 $from_now_events =
   $db->prepare(
-    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() GROUP BY events.id ORDER BY start_at ASC'
+    'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() AND event_attendance.user_id=:users_id GROUP BY events.id ORDER BY start_at ASC'
   );
+$from_now_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
 $from_now_events->execute();
 $from_now_events = $from_now_events->fetchAll();
 
+
+
 // ユーザーの参加するイベント
 $participating_events = $db->prepare(
-  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  'SELECT events.id, events.name, events.start_at, event_attendance.status_id, events.end_at, count(event_attendance.id) AS total_participants 
   FROM events 
   LEFT OUTER JOIN event_attendance 
   ON events.id = event_attendance.event_id 
@@ -46,7 +49,7 @@ $participating_events = $participating_events->fetchAll();
 
 // ユーザーの参加しないイベント
 $un_participating_events = $db->prepare(
-  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  'SELECT events.id, events.name, events.start_at, event_attendance.status_id, events.end_at, count(event_attendance.id) AS total_participants 
   FROM events 
   LEFT OUTER JOIN event_attendance 
   ON events.id = event_attendance.event_id 
@@ -63,7 +66,7 @@ $un_participating_events = $un_participating_events->fetchAll();
 
 // ユーザーの未解答のイベント
 $unanswered_events = $db->prepare(
-  'SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants 
+  'SELECT events.id, events.name, events.start_at, events.end_at, event_attendance.status_id, count(event_attendance.id) AS total_participants 
   FROM events 
   LEFT OUTER JOIN event_attendance 
   ON events.id = event_attendance.event_id 
@@ -214,6 +217,11 @@ function get_day_of_week($w)
           $participating_users = $participating_users->fetch();
           ?>
           <?php
+          $stmt = $db->prepare('SELECT user_id ,status_id ,events.id FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE user_id=? AND event_attendance.event_id=?');
+          $stmt->execute(array($user_id, $event['id']));
+          $status_id = $stmt->fetch();
+          ?>
+          <?php
           $start_date = strtotime($event['start_at']);
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
@@ -228,19 +236,19 @@ function get_day_of_week($w)
             </div>
             <div class="flex flex-col justify-between text-right">
               <div>
-                <?php if ($event['id'] % 3 === 1) : ?>
-                  <!--
+                <?php if ($status_id['status_id'] == 0) : ?>
+
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
                   <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime('-3 day', $end_date)); ?></p>
-                  -->
-                <?php elseif ($event['id'] % 3 === 2) : ?>
-                  <!-- 
+
+                <?php elseif ($status_id['status_id'] == 2) : ?>
+
                   <p class="text-sm font-bold text-gray-300">不参加</p>
-                  -->
+
                 <?php else : ?>
-                  <!-- 
+
                   <p class="text-sm font-bold text-green-400">参加</p>
-                  -->
+
                 <?php endif; ?>
               </div>
               <p class="text-sm"><span class="text-xl"><?php echo $participating_users['total_participants']; ?></span>人参加 ></p>

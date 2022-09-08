@@ -13,6 +13,7 @@ CREATE TABLE
         message VARCHAR(100) NULL,
         start_at DATETIME,
         end_at DATETIME,
+        deadline_at DATETIME,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         deleted_at DATETIME
@@ -141,28 +142,32 @@ SET
     name = '縦モク',
     message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/09/11 00:00',
-    end_at = '2022/09/11 23:00';
+    end_at = '2022/09/11 23:00',
+    deadline_at = '2022/09/10 09:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく',
     message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/09/12 00:00',
-    end_at = '2022/09/12 23:00';
+    end_at = '2022/09/12 23:00',
+    deadline_at = '2022/09/11 09:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく2',
     message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/10/12 00:00',
-    end_at = '2022/10/12 23:00';
+    end_at = '2022/10/12 23:00',
+    deadline_at = '2022/10/11 09:00';
 
 INSERT INTO events
 SET
     name = 'テストもくもく3',
     message = 'もくもくかい、開催楽しみにしててね',
     start_at = '2022/11/12 10:00',
-    end_at = '2022/11/12 13:00';
+    end_at = '2022/11/12 13:00',
+    deadline_at = '2022/11/12 09:00';
 
 INSERT INTO event_attendance
 SET
