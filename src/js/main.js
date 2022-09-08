@@ -26,7 +26,8 @@ async function openModal(eventId) {
     const url = '/api/getModalInfo.php?eventId=' + eventId
     const res = await fetch(url)
     const event = await res.json()
-    console.dir(event.total_participants['total_participants'] || (Number(false)));
+    console.dir(event.participants_name
+    );
     let modalHTML = `
       <h2 class="text-md font-bold mb-3">${event.name}</h2>
       <p class="text-sm">${event.date}（${event.day_of_week}）</p>
@@ -39,17 +40,25 @@ async function openModal(eventId) {
       </p>
 
       <hr class="my-4">
-
-      <p class="text-sm"><span class="text-xl">${event.total_participants['total_participants'] || 0}</span>人参加 ></p>
+      <details >
+        <summary class=" text-sm">
+      <span class=" text-xl">${event.total_participants['total_participants'] || 0}</span>人参加 >
+      </summary>
     `
+    event.participants_name.forEach(participant => {
+      modalHTML +=
+        `<p>
+      ${participant.name}
+      </p>`
+
+    });
+    modalHTML += ` </details>`
     switch (event.status_id) {
       case 0:
         modalHTML += `
           <div class="text-center mt-6">
-            <!--
             <p class="text-lg font-bold text-yellow-400">未回答</p>
             <p class="text-xs text-yellow-400">期限 ${event.deadline}</p>
-            -->
           </div>
           <div class="flex mt-5">
             <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
@@ -147,3 +156,6 @@ const clicked = () => {
   document.getElementById('filtter-button-participating').classList.remove('bg-blue-600');
 
 }
+
+
+
