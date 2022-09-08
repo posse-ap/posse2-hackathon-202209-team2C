@@ -281,6 +281,7 @@ CREATE TABLE
     users (
         id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+        slack_id varchar(100) COLLATE utf8_unicode_ci NULL,
         email varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
         password varchar(100) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -296,6 +297,7 @@ INSERT INTO users
 SET
     name = '岩村',
     email = 'email1@email',
+    slack_id = 'U041F0H9V0V',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
     created_at = '2022/09/11 23:00',
     status = 'public';
@@ -304,6 +306,7 @@ INSERT INTO users
 SET
     name = '小谷',
     email = 'email2@email',
+    slack_id = 'U041LCR4VB6',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
     created_at = '2022/09/11 23:00',
     status = 'public';
@@ -312,6 +315,7 @@ INSERT INTO users
 SET
     name = '信田',
     email = 'email3@email',
+    slack_id = 'U0427L687LY',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
     created_at = '2022/09/11 23:00',
     status = 'tentative';
@@ -320,6 +324,7 @@ INSERT INTO users
 SET
     name = 'のぶ',
     email = 'email4@email',
+    slack_id = 'U041K7B5D6F',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
     created_at = '2022/09/11 23:00',
     status = 'public';
