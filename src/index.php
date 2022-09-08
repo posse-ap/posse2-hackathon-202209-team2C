@@ -15,18 +15,31 @@ if (isset($_SESSION['id'])) {
 }
 
 
-$stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
-$events = $stmt->fetchAll();
-
+// $stmt = $db->query('SELECT events.id, events.name, events.start_at, events.end_at, count(event_attendance.id) AS total_participants FROM events LEFT JOIN event_attendance ON events.id = event_attendance.event_id GROUP BY events.id');
+// $events = $stmt->fetchAll();
 $today = date("Y/m/d");
+
+/* 最大ページ数を求める */
+$counts = $db->query('SELECT COUNT(*) as cnt FROM events WHERE start_at > now()');
+$counts->execute();
+$count = $counts->fetch();
+$max_page = floor(($count['cnt'] + 1) / 10 + 1);
+
+
 // 当日以降のイベントを取得する
 $from_now_events =
   $db->prepare(
-    'SELECT events.id, events.name, events.start_at, events.end_at, events.deadline_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() AND event_attendance.user_id=:users_id GROUP BY events.id ORDER BY start_at ASC'
+    'SELECT events.id, events.name, events.start_at, events.end_at, events.deadline_at, count(event_attendance.id) AS total_participants FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE start_at > now() AND event_attendance.user_id=:users_id GROUP BY events.id ORDER BY start_at ASC limit :start, 10'
   );
+$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+$page = ($page ?: 1);
+$start = ($page - 1) *  10;
+$from_now_events->bindValue(':start', $start, PDO::PARAM_INT);
 $from_now_events->bindValue(':users_id', $user_id, PDO::PARAM_STR);
 $from_now_events->execute();
 $from_now_events = $from_now_events->fetchAll();
+$cnt = count($from_now_events);
+// var_dump($cnt);
 
 
 
@@ -268,6 +281,14 @@ function get_day_of_week($w)
           </div>
         <?php endforeach; ?>
       </div>
+      <p>
+        <?php if ($page > 1) : ?>
+          <a href="?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
+        <?php endif; ?>
+        <?php if ($page < $max_page) : ?>
+          <a href="?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+        <?php endif; ?>
+      </p>
     </div>
   </main>
 
