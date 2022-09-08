@@ -68,7 +68,12 @@ docker-compose up -d
 ### メール送信サンプルについて
 
 メール送信
-ブラウザで `http://localhost/mailtest.php` にアクセスしてください、テストメールが送信されます
+1. 前日リマインドメール
+ブラウザで `http://localhost/remind-mail.php` にアクセスしてください、メールが送信されます
+
+2. 3日前未回答者リマインドメール
+ブラウザで `http://localhost/to-un-answer-mail.php` にアクセスしてください、メールが送信されます
+
 
 メール受信
 ブラウザで `http://localhost:8025/` にアクセスしてください、メールボックスが表示されます
