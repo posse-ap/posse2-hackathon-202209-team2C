@@ -180,13 +180,13 @@ INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 3,
-    status_id = 0;
+    status_id = 1;
 
 INSERT INTO event_attendance
 SET
     event_id = 17,
     user_id = 1,
-    status_id = 0;
+    status_id = 1;
 
 INSERT INTO event_attendance
 SET
