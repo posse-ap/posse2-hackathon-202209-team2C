@@ -313,8 +313,8 @@ SET
 
 INSERT INTO users
 SET
-    name = '信田',
-    email = 'email3@email',
+    name = 'のぶ',
+    email = 'email4@email',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
     created_at = '2022/09/11 23:00',
     status = 'public';
