@@ -25,6 +25,7 @@ services:
       MYSQL_USER: posse_user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
     ports:
       - "3306:3306"
     volumes:
@@ -39,13 +40,13 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
-      - db
+      - mysql
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOSTS=mysql
       - PMA_USER=posse_user
       - PMA_PASSWORD=password
     ports:
-      - "4040:80"
+      - "4041:80"
     volumes:
       - ./docker/phpmyadmin/sessions:/sessions

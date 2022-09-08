@@ -26,6 +26,8 @@ async function openModal(eventId) {
     const url = '/api/getModalInfo.php?eventId=' + eventId
     const res = await fetch(url)
     const event = await res.json()
+    console.dir(event.participants_name
+    );
     let modalHTML = `
       <h2 class="text-md font-bold mb-3">${event.name}</h2>
       <p class="text-sm">${event.date}（${event.day_of_week}）</p>
@@ -38,38 +40,52 @@ async function openModal(eventId) {
       </p>
 
       <hr class="my-4">
-
-      <p class="text-sm"><span class="text-xl">${event.total_participants}</span>人参加 ></p>
+      <details >
+        <summary class=" text-sm">
+      <span class=" text-xl">${event.total_participants['total_participants'] || 0}</span>人参加 >
+      </summary>
     `
-    switch (0) {
+    event.participants_name.forEach(participant => {
+      modalHTML +=
+        `<p>
+      ${participant.name}
+      </p>`
+
+    });
+    modalHTML += ` </details>`
+    switch (event.status_id) {
       case 0:
         modalHTML += `
           <div class="text-center mt-6">
-            <!--
             <p class="text-lg font-bold text-yellow-400">未回答</p>
             <p class="text-xs text-yellow-400">期限 ${event.deadline}</p>
-            -->
           </div>
           <div class="flex mt-5">
-            <button class="flex-1 bg-blue-500 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
-            <!-- 
-            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold">参加しない</button>
-            -->
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
+            <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="unparticipateEvent(${eventId})">参加しない</button>
           </div>
         `
         break;
       case 1:
         modalHTML += `
-          <div class="text-center mt-10">
-            <p class="text-xl font-bold text-gray-300">不参加</p>
-          </div>
+        <div class="text-center mt-10">
+        <p class="text-xl font-bold text-green-400">参加</p>
+        <div class="flex mt-5">
+        <button  class="pointer-events-none flex-1 bg-blue-600 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
+        <button class="flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="unparticipateEvent(${eventId})">参加しない</button>
+      </div>
+      </div>
         `
         break;
       case 2:
         modalHTML += `
           <div class="text-center mt-10">
-            <p class="text-xl font-bold text-green-400">参加</p>
-          </div>
+          <p class="text-xl font-bold text-gray-300">不参加</p>
+          <div class="flex mt-5">
+          <button class=" flex-1 bg-gray-300 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="participateEvent(${eventId})">参加する</button>
+          <button class="pointer-events-none flex-1 bg-blue-600 py-2 mx-3 rounded-3xl text-white text-lg font-bold" onclick="unparticipateEvent(${eventId})">参加しない</button>
+        </div>
+        </div>
         `
         break;
     }
@@ -95,12 +111,35 @@ async function participateEvent(eventId) {
   try {
     let formData = new FormData();
     formData.append('eventId', eventId)
+    formData.append('userId', userId)
     const url = '/api/postEventAttendance.php'
     await fetch(url, {
       method: 'POST',
       body: formData
     }).then((res) => {
-      if(res.status !== 200) {
+      if (res.status !== 200) {
+        throw new Error("system error");
+      }
+      console.log(res);
+      return res.text();
+    })
+    closeModal()
+    location.reload()
+  } catch (error) {
+    console.log(error)
+  }
+}
+async function unparticipateEvent(eventId) {
+  try {
+    let formData = new FormData();
+    formData.append('eventId', eventId)
+    formData.append('userId', userId)
+    const url = '/api/postEventUnattendance.php'
+    await fetch(url, {
+      method: 'POST',
+      body: formData
+    }).then((res) => {
+      if (res.status !== 200) {
         throw new Error("system error");
       }
       return res.text();
@@ -111,4 +150,12 @@ async function participateEvent(eventId) {
     console.log(error)
   }
 }
+
+
+const clicked = () => {
+  document.getElementById('filtter-button-participating').classList.remove('bg-blue-600');
+
+}
+
+
 

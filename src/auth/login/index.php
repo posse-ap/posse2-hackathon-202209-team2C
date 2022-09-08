@@ -2,6 +2,17 @@
 session_start();
 require('../../dbconnect.php');
 
+//  ダミーデータ挿入 passwordハッシュ化
+// $form = [
+//   'email' => 'email@email',
+//   'password' => 'pass'
+// ];
+// $stmt = $db->prepare('insert into users (email, password) VALUES (?, ?)');
+// $password = password_hash($form['password'], PASSWORD_DEFAULT);
+// $stmt->bindValue(1, $form['email']);
+// $stmt->bindValue(2, $password);
+// $stmt->execute();
+
 $error = [];
 $email = '';
 $password = '';
@@ -16,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $stmt->execute();
   $result = $stmt->fetch();
 
-  if (isset($result['password']) && $password === $result['password']) {
+  if (isset($result['password']) && password_verify($password, $result['password'])) {
     // ログイン成功
     session_regenerate_id();
     $_SESSION['id'] = $result['id'];
@@ -60,8 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="ログイン" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
       </form>
       <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/">パスワードを忘れた方はこちら</a>
+        <a class="a_link text-xs" href="../../password_reset/show_request_form.php" class="text-xs">パスワードを忘れた方へ</a>
       </div>
+
+    </div>
     </div>
   </main>
 </body>
