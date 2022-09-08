@@ -465,6 +465,31 @@ SET
 
 INSERT INTO event_attendance
 SET
+    event_id = 21,
+    user_id = 4,
+    status_id = 0;
+
+
+INSERT INTO event_attendance
+SET
+    event_id = 22,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 22,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 22,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
     event_id = 22,
     user_id = 4,
     status_id = 0;
@@ -484,6 +509,30 @@ SET
 INSERT INTO event_attendance
 SET
     event_id = 23,
+    user_id = 3,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 23,
+    user_id = 4,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 24,
+    user_id = 1,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 24,
+    user_id = 2,
+    status_id = 0;
+
+INSERT INTO event_attendance
+SET
+    event_id = 24,
     user_id = 3,
     status_id = 0;
 
