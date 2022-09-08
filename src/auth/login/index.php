@@ -1,5 +1,11 @@
 <?php
 session_start();
+$accessToken = $_SESSION['my_acccess_token_accessToken'];
+if (!$accessToken = "") {
+  echo 'logged';
+} else {
+  echo `logged_in`;
+}
 require('../../dbconnect.php');
 
 //  ダミーデータ挿入 passwordハッシュ化
@@ -33,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['id'] = $result['id'];
     header('Location: ../../index.php');
     exit();
+  } else if (!$accessToken = "") {
+    session_regenerate_id();
+    header('Location: ../../index.php');
   } else {
     $error['login'] = 'failed';
     // echo '失敗';
@@ -74,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a class="a_link text-xs" href="../../password_reset/show_request_form.php" class="text-xs">パスワードを忘れた方へ</a>
       </div>
 
+      <a href="https://github.com/login/oauth/authorize?client_id=b7285b4dac56187b2376">githubでサインインする</a>
     </div>
     </div>
   </main>
