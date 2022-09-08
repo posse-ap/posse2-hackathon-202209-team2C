@@ -30,17 +30,17 @@ require('dbconnect.php');
 // }
 
 
-// 一日後までにあるイベントを取得
+// 三日後にあるイベントを取得
 $stmt = $db->prepare(
     'SELECT name,message,start_at FROM events 
-    WHERE start_at < now() + interval 24 hour and start_at > now();'
+    WHERE  start_at < now() + interval 72 hour and start_at > now() + interval 48 hour;'
 );
 $stmt->execute();
 $events = $stmt->fetchAll();
 
-echo '<pre>'; 
-    var_dump($events);
-echo '</pre>';
+// echo '<pre>'; 
+//     var_dump($events);
+// echo '</pre>';
 
 // 全ユーザーを取得
 $userstmt = $db->prepare(
@@ -63,9 +63,9 @@ $userlists = $userstmt->fetchAll();
 //     $set[$user['user_id']]['event_tomorrow']['event_id']['event_detail'] = $user['message'];
 // endforeach;
 
-echo '<pre>'; 
-    var_dump($userlists);
-echo '</pre>';
+// echo '<pre>'; 
+//     var_dump($userlists);
+// echo '</pre>';
 
 // ここからメール
 
@@ -91,17 +91,18 @@ foreach ($userlists as $user) :
     $to = implode(',', $to_array);
     // $to = $to_array . '';
     $headers = ["From" => "system@posse-ap.com", "Content-Type" => "text/plain; charset=UTF-8", "Content-Transfer-Encoding" => "8bit"];
-    $subject = "明日のイベントのリマインド";
+    $subject = "三日後のイベントについて回答をお願いします！";
     $name_array = [$user['name']];
     $name = implode($name_array);
     $date = date('Y-m-d', strtotime('+1 day'));
-
+    $url = "http://localhost";
 
 
     $body = <<<EOT
     {$name}さん${date}に
     {$invite_events}
-    を開催します。把握よろしくお願いします。
+    を開催します。こちらのURLより参加不参加の回答をよろしくお願いします。
+    {$url}
     EOT;
 
     mb_send_mail($to, $subject, $body, $headers);
