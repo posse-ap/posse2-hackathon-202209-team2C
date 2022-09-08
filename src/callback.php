@@ -21,4 +21,3 @@ $user = $provider->getResourceOwner($token);
 echo '<pre>';
 var_dump($user);
 echo '</pre>';
-
