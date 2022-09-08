@@ -28,7 +28,7 @@ $passwordResetuser = $stmt->fetch(\PDO::FETCH_OBJ);
 if (!$passwordResetuser) exit('無効なURLです');
 
 // テーブルに保存するパスワードをハッシュ化
-$hashedPassword = sha1($request['password']);
+$hashedPassword = password_hash($request['password'], PASSWORD_DEFAULT);
 
 // usersテーブルとpassword_resetsテーブルの原子性を原始性を保証するため、トランザクションを設置
 try {
