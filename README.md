@@ -29,13 +29,13 @@ docker-compose up -d
 
 一般ユーザー②：信田
 ```bash
-メールアドレス：email2@email
+メールアドレス：email3@email
 パスワード：pass
 ```
 
 一般ユーザー③：のぶ
 ```bash
-メールアドレス：email2@email
+メールアドレス：email4@email
 パスワード：pass
 ```
 
