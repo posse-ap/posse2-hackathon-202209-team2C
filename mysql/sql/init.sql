@@ -141,8 +141,8 @@ INSERT INTO events
 SET
     name = '縦モク',
     message = 'もくもくかい、開催楽しみにしててね',
-    start_at = '2022/09/11 00:00',
-    end_at = '2022/09/11 23:00',
+    start_at = '2022/09/10 00:00',
+    end_at = '2022/09/10 23:00',
     deadline_at = '2022/09/10 09:00';
 
 INSERT INTO events
@@ -329,23 +329,23 @@ INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 1,
-    status_id = 0;
+    status_id = 1;
 
 INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 2,
-    status_id = 0;
+    status_id = 1;
 
 INSERT INTO event_attendance
 SET
     event_id = 16,
     user_id = 3,
-    status_id = 0;
+    status_id = 1;
 
 INSERT INTO event_attendance
 SET
-    event_id = 16,
+    event_id = 6,
     user_id = 4,
     status_id = 0;
 
