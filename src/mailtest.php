@@ -94,7 +94,7 @@ foreach ($userlists as $user) :
     $subject = "三日後のイベントについて回答をお願いします！";
     $name_array = [$user['name']];
     $name = implode($name_array);
-    $date = date('Y-m-d', strtotime('+1 day'));
+    $date = date('Y-m-d', strtotime('+3 day'));
     $url = "http://localhost";
 
 
