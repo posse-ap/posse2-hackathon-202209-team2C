@@ -69,23 +69,23 @@ try {
     mb_internal_encoding("UTF-8");
 
     // URLはご自身の環境に合わせてください
-    // $url = "http://localhost/password_reset/show_reset_form.php?token={$passwordResetToken}";
+    $url = "http://localhost/password_reset/show_reset_form.php?token={$passwordResetToken}";
 
-    // $subject =  'パスワードリセット用URLをお送りします';
+    $subject =  'パスワードリセット用URLをお送りします';
 
-    // $body = <<<EOD
-    //     24時間以内に下記URLへアクセスし、パスワードの変更を完了してください。
-    //     {$url}
-    //     EOD;
+    $body = <<<EOD
+        24時間以内に下記URLへアクセスし、パスワードの変更を完了してください。
+        {$url}
+        EOD;
 
-    // $headers = ['From' => 'テスト<foo@example.jp>', 'Content-Type' => 'text/plain; charset=UTF-8', 'Content-Transfer-Encoding' => '8bit'];
+    $headers = ['From' => 'テスト<foo@example.jp>', 'Content-Type' => 'text/plain; charset=UTF-8', 'Content-Transfer-Encoding' => '8bit'];
 
     // mb_send_mailは成功したらtrue、失敗したらfalseを返す
-    $to = '送信先@example.com';
-    $title = '件名';
-    $message = '本文';
-    $header = 'From: 送信元@example.jp';
-    $isSent = mb_send_mail($to, $title, $message, $header, '-f' . '送信元@example.jp');
+    // $to = "hackathon-teamX@posse-ap.com";
+    // $subject = "PHPからメール送信サンプル";
+    // $body = "本文";
+    // $headers = ["From" => "system@posse-ap.com", "Content-Type" => "text/plain; charset=UTF-8", "Content-Transfer-Encoding" => "8bit"];
+    $isSent = mb_send_mail($email, $subject, $body, $headers);
 
     if (!$isSent) throw new \Exception('メール送信に失敗しました。');
 
@@ -99,4 +99,4 @@ try {
 
 
 // 送信済み画面を表示
-require_once '../views/password_reset/email_sent.php';
+require_once '../password_reset_view/email_sent.php';
