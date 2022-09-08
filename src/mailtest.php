@@ -82,7 +82,7 @@ foreach ($set as $s) :
 
     $invite_events = '';
     foreach ($s['event_tomorrow'] as $invite_event) :
-        $invite_events .= "・" . $invite_event['event_name'] . " 詳細：".  $invite_event['event_detail'] ."\n  ";
+        $invite_events .= "・" . $invite_event['event_name'] . " 詳細：" .  $invite_event['event_detail'] . "\n  ";
     endforeach;
 
     $body = <<<EOT

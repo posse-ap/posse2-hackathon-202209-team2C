@@ -226,7 +226,11 @@ CREATE TABLE
         password varchar(100) CHARACTER SET utf8mb3 COLLATE utf8_unicode_ci NOT NULL,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        deleted_at DATETIME
+        deleted_at DATETIME,
+        register_token VARCHAR(255),
+        register_token_sent_at DATETIME,
+        register_token_verified_at DATETIME,
+        status ENUM('tentative', 'public') DEFAULT 'tentative'
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3 COLLATE = utf8_unicode_ci;
 
 INSERT INTO users
@@ -234,25 +238,38 @@ SET
     name = '岩村',
     email = 'email1@email',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
-    created_at = '2022/09/11 23:00';
+    created_at = '2022/09/11 23:00',
+    status = 'public';
 
 INSERT INTO users
 SET
     name = '小谷',
     email = 'email2@email',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
-    created_at = '2022/09/11 23:00';
+    created_at = '2022/09/11 23:00',
+    status = 'public';
 
 INSERT INTO users
 SET
     name = '信田',
     email = 'email3@email',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
-    created_at = '2022/09/11 23:00';
+    created_at = '2022/09/11 23:00',
+    status = 'tentative';
 
 INSERT INTO users
 SET
     name = '信田',
     email = 'email3@email',
     password = '$2y$10$T.op0EUdVRNXuXmfF1Az6e5f5AcCL/WmgPoSo1zUe05WXghRFQxvm',
-    created_at = '2022/09/11 23:00';
+    created_at = '2022/09/11 23:00',
+    status = 'public';
+
+DROP TABLE IF EXISTS passwords_reset;
+
+CREATE TABLE
+    password_resets (
+        email varchar(50) PRIMARY KEY,
+        token varchar(80) NOT NULL,
+        token_sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );

@@ -71,8 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="ログイン" class="cursor-pointer w-full p-3 text-md text-white bg-blue-400 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-300">
       </form>
       <div class="text-center text-xs text-gray-400 mt-6">
-        <a href="/">パスワードを忘れた方はこちら</a>
+        <a class="a_link text-xs" href="../../password_reset/show_request_form.php" class="text-xs">パスワードを忘れた方へ</a>
       </div>
+
+    </div>
     </div>
   </main>
 </body>
