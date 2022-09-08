@@ -27,9 +27,9 @@ foreach ($users as $user) :
     $set[$user['event_id']]['un-answer'][] = $user['slack_id'];
 endforeach;
 
-echo '<pre>';
-var_dump($set);
-echo '</pre>';
+// echo '<pre>';
+// var_dump($set);
+// echo '</pre>';
 
 $text = "三日後のイベントについて回答をお願いします！ \n";
 foreach ($set as $s) :
