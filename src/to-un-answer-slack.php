@@ -4,7 +4,7 @@ require('dbconnect.php');
 
 // 三日後にあるイベント、それに対して未回答な人も取得
 $stmt = $db->prepare(
-    'SELECT events.id AS event_id,users.id AS user_id,users.name AS user_name,users.email,events.name AS event_name,events.message,events.start_at 
+    'SELECT events.id AS event_id,users.id AS user_id,users.slack_id,users.email,events.name AS event_name,events.message,events.start_at 
     FROM `event_attendance` INNER JOIN users ON event_attendance.user_id = users.id 
     INNER JOIN events ON event_attendance.event_id = events.id 
     WHERE status_id = 0 AND start_at < now() + interval 72 hour and start_at > now() + interval 48 hour;'
@@ -24,7 +24,7 @@ foreach ($users as $user) :
     $set[$user['event_id']]['event_name'] = $user['event_name'];
     $set[$user['event_id']]['message'] = $user['message'];
     $set[$user['event_id']]['start_at'] = $user['start_at'];
-    $set[$user['event_id']]['un-answer'][] = $user['user_name'];
+    $set[$user['event_id']]['un-answer'][] = $user['slack_id'];
 endforeach;
 
 echo '<pre>';
@@ -35,12 +35,12 @@ $text = "三日後のイベントについて回答をお願いします！ \n";
 foreach ($set as $s) :
     $unAnswers = '';
     foreach ($s['un-answer'] as $p) :
-        $unAnswers .= "・@" . $p . " \n  ";
+        $unAnswers .= "・<@" . $p . "> \n  ";
     endforeach;
     $text .= "イベント名:" . $s['event_name'] . "\n 開催日時:" . $s['start_at'] . "\n 詳細:" . $s['message'] .  "\n 未回答者: \n" . $unAnswers. "\n\n";
 endforeach;
 
-    $url = "https://hooks.slack.com/services/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";
+    $url = "https://hooks.slack.com/services/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";
     $message = [
         "channel" => "#slackbot-posse2-hackathon-202209-team2c",
         "text" => $text
