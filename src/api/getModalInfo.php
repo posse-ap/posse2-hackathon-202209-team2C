@@ -24,6 +24,15 @@ if (isset($_GET['eventId'])) {
     $stmt->execute(array($eventId));
     $total_participants = $stmt->fetch();
 
+    //参加ユーザー名取得
+    $stmt = $db->prepare('SELECT event_attendance.user_id, users.name
+    FROM events 
+    LEFT JOIN event_attendance ON events.id = event_attendance.event_id 
+    Right JOIN users ON event_attendance.user_id=users.id
+    WHERE events.id =? AND status_id=1 ');
+    $stmt->execute(array($eventId));
+    $participants_name = $stmt->fetchAll();
+
 
     $start_date = strtotime($event['start_at']);
     $end_date = strtotime($event['end_at']);
@@ -43,6 +52,7 @@ if (isset($_GET['eventId'])) {
       'message' => $event['message'],
       'status' => $status,
       'status_id' => $status_id['status_id'],
+      'participants_name' => $participants_name,
       'deadline' => date("m月d日", strtotime('-3 day', $end_date)),
     ];
 

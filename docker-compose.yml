@@ -47,6 +47,6 @@ services:
       - PMA_USER=posse_user
       - PMA_PASSWORD=password
     ports:
-      - "4040:80"
+      - "4041:80"
     volumes:
       - ./docker/phpmyadmin/sessions:/sessions

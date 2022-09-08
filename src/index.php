@@ -126,25 +126,6 @@ $unanswered_users = $db->prepare(
 $unanswered_users->execute();
 $unanswered_users = $unanswered_users->fetchAll();
 
-// // 参加者
-// $participating_users = $db->prepare(
-//   'SELECT events.name AS events_name,users.name AS users_name, events.start_at,count(event_attendance.id)
-//   FROM event_attendance
-//   LEFT OUTER JOIN events
-//   ON event_attendance.event_id = events.id
-//   RIGHT OUTER JOIN users
-//   ON event_attendance.user_id = users.id
-//   WHERE start_at > now()
-//   AND status_id=1
-//   ORDER BY events.id
-//   '
-// );
-
-// $participating_users->execute();
-// $participating_users = $participating_users->fetch();
-
-
-
 
 function get_day_of_week($w)
 {
@@ -161,6 +142,8 @@ function get_day_of_week($w)
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <title>Schedule | POSSE</title>
 </head>
 
@@ -180,7 +163,6 @@ function get_day_of_week($w)
   </header>
 
   <main class="bg-gray-100">
-
     <div class="w-full mx-auto p-5">
 
       <div id="filter" class="mb-8">
@@ -203,8 +185,9 @@ function get_day_of_week($w)
         <?php foreach ($events as $event) : ?>
 
           <?php
-          $participating_users = $db->prepare(
-            'SELECT count(event_attendance.id) AS total_participants 
+          // 参加人数取得
+          $participating_users_number = $db->prepare(
+            'SELECT  count(event_attendance.id) AS total_participants 
               FROM event_attendance
               LEFT OUTER JOIN events
               ON event_attendance.event_id = events.id
@@ -214,8 +197,18 @@ function get_day_of_week($w)
               ORDER BY events.id
               '
           );
-          $participating_users->execute(array($event['id']));
-          $participating_users = $participating_users->fetch();
+          $participating_users_number->execute(array($event['id']));
+          $participating_users_number = $participating_users_number->fetch();
+
+          // 参加する人取得
+
+          $stmt = $db->prepare('SELECT event_attendance.user_id, users.name
+            FROM events 
+            LEFT JOIN event_attendance ON events.id = event_attendance.event_id 
+            Right JOIN users ON event_attendance.user_id=users.id
+            WHERE events.id =? AND status_id=1 ');
+          $stmt->execute(array($event['id']));
+          $participants_name = $stmt->fetchAll();
           ?>
           <?php
           $stmt = $db->prepare('SELECT user_id ,status_id ,events.id FROM events LEFT OUTER JOIN event_attendance ON events.id = event_attendance.event_id WHERE user_id=? AND event_attendance.event_id=?');
@@ -227,32 +220,50 @@ function get_day_of_week($w)
           $end_date = strtotime($event['end_at']);
           $day_of_week = get_day_of_week(date("w", $start_date));
           ?>
-          <div class="modal-open bg-white mb-3 p-4 flex justify-between rounded-md shadow-md cursor-pointer" id="event-<?php echo $event['id']; ?>">
-            <div>
-              <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
-              <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
-              <p class="text-xs text-gray-600">
-                <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
-              </p>
-            </div>
-            <div class="flex flex-col justify-between text-right">
+          <div class="bg-white mb-3 p-4 flex rounded-md shadow-md">
+            <div class="modal-open  cursor-pointer w-11/12" id="event-<?php echo $event['id']; ?>">
               <div>
+                <h3 class="font-bold text-lg mb-2"><?php echo $event['name'] ?></h3>
+                <p><?php echo date("Y年m月d日（${day_of_week}）", $start_date); ?></p>
+                <p class="text-xs text-gray-600">
+                  <?php echo date("H:i", $start_date) . "~" . date("H:i", $end_date); ?>
+                </p>
+              </div>
+            </div>
+            <div>
+              <div class="text-center">
                 <?php if ($status_id['status_id'] == 0) : ?>
-
                   <p class="text-sm font-bold text-yellow-400">未回答</p>
                   <p class="text-xs text-yellow-400">期限 <?php echo date("m月d日", strtotime($event['deadline_at'])); ?></p>
 
                 <?php elseif ($status_id['status_id'] == 2) : ?>
 
-                  <p class="text-sm font-bold text-gray-300">不参加</p>
+                  <p class="text-sm inline-block font-bold text-gray-300">不参加</p>
 
                 <?php else : ?>
 
-                  <p class="text-sm font-bold text-green-400">参加</p>
+                  <p class="text-sm font-bold inline-block text-green-400">参加</p>
 
                 <?php endif; ?>
               </div>
-              <p class="text-sm"><span class="text-xl"><?php echo $participating_users['total_participants']; ?></span>人参加 ></p>
+              <div>
+                <p class="text-sm w-24 nav-open inline-block cursor-pointer"><span class="text-xl"><?php echo $participating_users_number['total_participants']; ?></span>人参加 </p>
+                <nav>
+                  <ul class="text-center">
+                    <?php
+                    foreach ($participants_name as $participant_name) {
+                    ?>
+                      <li>
+                        <?php
+                        echo $participant_name['name']
+                        ?>
+                      </li>
+                    <?php
+                    }
+                    ?>
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>
@@ -276,6 +287,15 @@ function get_day_of_week($w)
       </div>
     </div>
   </div>
+  <script>
+    $(function() {
+      //クリックで動く
+      $('.nav-open').click(function() {
+        $(this).toggleClass('active');
+        $(this).next('nav').slideToggle();
+      });
+    });
+  </script>
   <script type="text/javascript">
     let userId = <?php echo $user_id ?>;
   </script>
