@@ -27,7 +27,7 @@ if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
             </div>
             <div>
                 <?php if ($_SESSION['admin']) : ?>
-                    <a href="../index.php" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ユーザー画面へ</a>
+                    <a href="../index.php" class="text-white bg-blue-400 px-4 py-2 rounded-3xl bg-gradient-to-r from-blue-600 to-blue-200">ユーザー画面</a>
                 <?php endif; ?>
                 <a href="/auth/logout.php" class="">ログアウト</a>
             </div>
